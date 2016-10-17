@@ -22,3 +22,15 @@
     group: root
     mode: 0644
   notify: restart kibana
+
+- name: List Kibana plugins
+  shell: "/opt/kibana/bin/kibana plugin --list"
+  register: installed_plugins
+  when: kibana_plugins|length > 0
+  changed_when: false
+
+- name: Install Kibana plugins
+  shell: "/opt/kibana/bin/kibana plugin --install {{ item.src }}"
+  with_items: "{{ kibana_plugins }}"
+  when: item.name not in installed_plugins.stdout
+  notify: restart kibana

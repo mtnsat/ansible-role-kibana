@@ -1,6 +1,6 @@
 # Ansible Role: Kibana
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-kibana.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-kibana)
+[![Build Status](https://travis-ci.org/mtnsat/ansible-role-kibana.svg?branch=master)](https://travis-ci.org/mtnsat/ansible-role-kibana)
 
 An Ansible Role that installs Kibana on RedHat/CentOS or Debian/Ubuntu.
 
@@ -24,6 +24,12 @@ The FQDN or IP address and port Kibana should use.
     kibana_elasticsearch_url: "http://localhost:9200"
 
 The URL (including port) over which Kibana will connect to Elasticsearch.
+
+Optional list of Kibana plugins to install
+
+    kibana_plugins:
+      - name: sense
+        src: elastic/sense
 
 ## Dependencies
 
