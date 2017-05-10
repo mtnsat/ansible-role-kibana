@@ -1,0 +1,6 @@
+---
+
+- name: install elasticdump utility
+  npm:
+    name: elasticdump
+    global: yes
