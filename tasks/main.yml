@@ -35,3 +35,13 @@
     name: kibana
     state: started
     enabled: yes
+
+# Add a message to the pipeline to trigger indexing
+- name: insert a message for logstash
+  shell: >-
+    echo '{
+    "kibana_version": "{{ kibana_version }}",
+    "ansible_version": "{{ ansible_version }}"
+    }'
+    | nc {{ logstash_host }} 5000
+  changed_when: false
