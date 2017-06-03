@@ -1,6 +1,17 @@
 ---
-
 - name: install elasticdump utility
   npm:
     name: elasticdump
     global: yes
+
+## Shell script to assist backup and restore to s3
+- name: Create s3 backup/restore scripts
+  template:
+    src: "{{ item }}.j2"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+  with_items:
+    - mtn-elasticdump-s3-backup.sh
+    - mtn-elasticdump-s3-restore.sh
+
+## Set up cron job to deploy

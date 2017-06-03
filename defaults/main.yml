@@ -7,3 +7,5 @@ kibana_server_host: "0.0.0.0"
 kibana_elasticsearch_url: "http://localhost:9200"
 
 logstash_host: localhost
+
+kibana_elasticdump_bucket: elasticsearch-data-backup
