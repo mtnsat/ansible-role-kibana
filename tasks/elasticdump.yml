@@ -4,7 +4,7 @@
     name: elasticdump
     global: yes
 
-## Shell script to assist backup and restore to s3
+## Shell scripts to assist backup and restore to s3
 - name: Create s3 backup/restore scripts
   template:
     src: "{{ item }}.j2"

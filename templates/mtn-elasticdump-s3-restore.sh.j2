@@ -3,7 +3,7 @@
 
 set -x
 
-aws s3 cp s3://{{ kibana_elasticdump_bucket }}/{{ elasticsearch_host }}/.kibana.json ./
+aws s3 cp s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/.kibana.json ./
 
 elasticdump \
     --input .kibana.json \

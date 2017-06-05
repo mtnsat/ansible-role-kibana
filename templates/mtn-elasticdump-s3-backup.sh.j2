@@ -3,15 +3,15 @@
 
 set -x
 
-YESTERDAY=logstash-`date -u --date='yesterday' +"%Y.%m.%d"`
-
-elasticdump \
-    --input http://{{ elasticsearch_host }}:9200/$YESTERDAY \
-    --output $YESTERDAY.json \
-
 elasticdump \
     --input http://{{ elasticsearch_host }}:9200/.kibana \
-    --output .kibana.json \
+    --output .kibana.json
 
-aws s3 cp $YESTERDAY.json s3://{{ kibana_elasticdump_bucket }}/{{ elasticsearch_host }}/
-aws s3 cp .kibana.json s3://{{ kibana_elasticdump_bucket }}/{{ elasticsearch_host }}/
+aws s3 cp .kibana.json s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/
+
+YESTERDAY=logstash-`date -u --date='yesterday' +"%Y.%m.%d"`
+elasticdump \
+    --input http://{{ elasticsearch_host }}:9200/$YESTERDAY \
+    --output $YESTERDAY.json
+
+aws s3 cp $YESTERDAY.json s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/
