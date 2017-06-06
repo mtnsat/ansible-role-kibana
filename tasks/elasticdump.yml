@@ -4,7 +4,7 @@
     name: elasticdump
     global: yes
 
-## Shell scripts to assist backup and restore to s3
+# Shell scripts to assist backup and restore to s3
 - name: Create s3 backup/restore scripts
   template:
     src: "{{ item }}.j2"
@@ -13,5 +13,3 @@
   with_items:
     - mtn-elasticdump-s3-backup.sh
     - mtn-elasticdump-s3-restore.sh
-
-## Set up cron job to deploy
