@@ -17,6 +17,7 @@
 
 # Restore .kibana from last prod backup in vagrant
 - name: Restore .kibana index from last prod backup in vagrant
+  become: no
   shell: /usr/local/bin/mtn-elasticdump-s3-restore.sh
   when:
     - vagrant_test_env is defined and vagrant_test_env
