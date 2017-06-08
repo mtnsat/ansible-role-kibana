@@ -1,7 +1,5 @@
 ---
-dependencies:
-  # Used for elasticsearch backups
-  - role: mtn_awscli
+dependencies: []
 
 galaxy_info:
   author: geerlingguy
