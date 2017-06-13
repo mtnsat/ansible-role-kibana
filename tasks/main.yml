@@ -5,10 +5,30 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- include: elasticdump.yml
+  when: ansible_os_family == 'Debian'
+
 - name: Install Kibana.
   package:
     name: kibana={{ kibana_version }}
     state: present
+
+- name: Ensure Kibana configuration directory
+  file:
+    path: /etc/kibana
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy Kibana configuration.
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart kibana
 
 - name: Ensure Kibana is started and enabled at boot.
   service:
@@ -16,11 +36,12 @@
     state: started
     enabled: yes
 
-- name: Copy Kibana configuration.
-  template:
-    src: kibana.yml.j2
-    dest: "/etc/kibana/kibana.yml"
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart kibana
+# Add a message to the pipeline to trigger indexing
+- name: insert a message for logstash
+  shell: >-
+    echo '{
+    "kibana_version": "{{ kibana_version }}",
+    "ansible_version": "{{ ansible_version }}"
+    }'
+    | nc {{ logstash_host }} 5000
+  changed_when: false

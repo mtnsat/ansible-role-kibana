@@ -1,0 +1,10 @@
+#!/bin/bash
+# Restore elasticsearch data from s3 backups
+
+set -x
+
+aws s3 cp s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/.kibana.json ./
+
+elasticdump \
+    --input .kibana.json \
+    --output http://{{ elasticsearch_host }}:9200/.kibana

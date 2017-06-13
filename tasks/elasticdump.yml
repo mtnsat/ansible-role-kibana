@@ -1,0 +1,24 @@
+---
+- name: install elasticdump utility
+  npm:
+    name: elasticdump
+    global: yes
+
+# Shell scripts to assist backup and restore to s3
+- name: Create s3 backup/restore scripts
+  template:
+    src: "{{ item }}.j2"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+  register: elasticdump_scripts
+  with_items:
+    - mtn-elasticdump-s3-backup.sh
+    - mtn-elasticdump-s3-restore.sh
+
+# Restore .kibana from last prod backup in vagrant
+- name: Restore .kibana index from last prod backup in vagrant
+  become: no
+  shell: /usr/local/bin/mtn-elasticdump-s3-restore.sh
+  when:
+    - vagrant_test_env is defined and vagrant_test_env
+    - elasticdump_scripts | changed

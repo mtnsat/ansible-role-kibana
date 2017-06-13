@@ -12,3 +12,10 @@
     repo: 'deb https://artifacts.elastic.co/packages/5.x/apt stable main'
     state: present
     update_cache: yes
+
+- name: Install nodejs and friends for elasticdump
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - nodejs-legacy
+    - npm
