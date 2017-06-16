@@ -81,3 +81,8 @@ elasticsearch.url: {{ kibana_elasticsearch_url }}
 
 # Set this to true to log all events, including system usage information and all requests.
 # logging.verbose: false
+
+# tilemap options
+{% for item in tilemap_options %}
+{{ item }}
+{% endfor %}
