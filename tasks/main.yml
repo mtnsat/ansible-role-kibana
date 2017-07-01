@@ -37,7 +37,7 @@
     enabled: yes
 
 # Add a message to the pipeline to trigger indexing
-- name: insert a message for logstash
+- name: Insert a message for logstash
   shell: >-
     echo '{
     "kibana_version": "{{ kibana_version }}",
@@ -45,3 +45,4 @@
     }'
     | nc {{ logstash_host }} 5000
   changed_when: false
+  ignore_errors: yes
