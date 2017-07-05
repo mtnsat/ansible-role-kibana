@@ -25,3 +25,8 @@ gzip $YESTERDAY.json
 aws s3 cp $YESTERDAY.json.gz s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/ \
 {% if vagrant_test_env is defined and vagrant_test_env %}# {% endif -%}
     && rm $YESTERDAY.json.gz
+
+# Remove elasticsearch daily backups after 1 week
+LASTWEEK=logstash-`date -u --date='last week' +"%Y.%m.%d"`.gz
+aws s3 rm s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/$LASTWEEK \
+    || echo "$LASTWEEK not found on s3"
