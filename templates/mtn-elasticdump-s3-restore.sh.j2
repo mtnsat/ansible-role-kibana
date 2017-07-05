@@ -7,4 +7,5 @@ aws s3 cp s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/.kibana.
 
 elasticdump \
     --input .kibana.json \
+    --limit 1000 \
     --output http://{{ elasticsearch_host }}:9200/.kibana
