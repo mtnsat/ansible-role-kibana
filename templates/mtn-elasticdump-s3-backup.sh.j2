@@ -5,6 +5,7 @@ set -x
 
 elasticdump \
     --input http://{{ elasticsearch_host }}:9200/.kibana \
+    --limit 1000 \
     --output .kibana.json
 
 {# nerf the backup step in vagrant #}
@@ -14,8 +15,11 @@ aws s3 cp .kibana.json s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostnam
 YESTERDAY=logstash-`date -u --date='yesterday' +"%Y.%m.%d"`
 elasticdump \
     --input http://{{ elasticsearch_host }}:9200/$YESTERDAY \
+    --limit 10000 \
     --output $YESTERDAY.json
+
+gzip $YESTERDAY.json
 
 {# nerf the backup step in vagrant #}
 {% if vagrant_test_env is defined and vagrant_test_env %}# {% endif -%}
-aws s3 cp $YESTERDAY.json s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/
+aws s3 cp $YESTERDAY.json.gz s3://{{ kibana_elasticdump_bucket }}/{{ inventory_hostname }}/
