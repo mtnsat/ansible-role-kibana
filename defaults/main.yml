@@ -1,5 +1,5 @@
 ---
-kibana_version: "5.0.0"
+kibana_version: "6.2.2"
 
 kibana_server_port: 5601
 kibana_server_host: "0.0.0.0"
@@ -8,3 +8,5 @@ kibana_elasticsearch_url: "http://localhost:9200"
 kibana_elasticdump_bucket: elasticsearch-data-backup
 
 logstash_host: localhost
+
+elastic_apt_repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
