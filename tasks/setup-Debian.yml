@@ -20,4 +20,3 @@
     name: "{{ item }}"
   with_items:
     - nodejs
-    - npm
