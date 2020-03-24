@@ -20,4 +20,8 @@
     name: "{{ item }}"
   with_items:
     - nodejs
-    - npm
+    - libfontconfig1
+    - fonts-liberation
+    - libnss3-tools
+    - libnss3
+    

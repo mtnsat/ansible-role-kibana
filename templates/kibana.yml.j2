@@ -12,7 +12,13 @@ server.host: {{ kibana_server_host }}
 # server.maxPayloadBytes: 1048576
 
 # The Elasticsearch instance to use for all your queries.
+{% if kibana_version < 6 %}
 elasticsearch.url: {{ kibana_elasticsearch_url }}
+{% endif %}
+
+{% if kibana_version > 6 %}
+elasticsearch.hosts: [ {{ kibana_elasticsearch_url }} ]
+{% endif %}
 
 # preserve_elasticsearch_host true will send the hostname specified in `elasticsearch`. If you set it to false,
 # then the host you use to connect to *this* Kibana instance will be sent.
@@ -31,6 +37,18 @@ elasticsearch.url: {{ kibana_elasticsearch_url }}
 # the Kibana server)
 # elasticsearch.username: "user"
 # elasticsearch.password: "pass"
+
+{% if kibana_enable_xpack is defined %}
+xpack.security.encryptionKey: {{ kibana_enc_key }}
+xpack.security.sessionTimeout: 600000
+xpack.reporting.encryptionKey: {{ kibana_enc_key }}
+server.ssl.enabled: true
+server.ssl.certificate: {{ kibana_ssl_cert }}
+server.ssl.key: {{ kibana_ssl_key }}
+server.ssl.certificateAuthorities: {{ kibana_ssl_ca_cert }}
+xpack.monitoring.elasticsearch.hosts: {{ kibana_monitored_hosts }}
+xpack.security.enabled: true
+{% endif %}
 
 # SSL for outgoing requests from the Kibana Server to the browser (PEM formatted)
 # server.ssl.cert: /path/to/your/server.crt
