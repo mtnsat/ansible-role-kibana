@@ -46,3 +46,10 @@
     | nc {{ logstash_host }} 5000
   changed_when: false
   ignore_errors: yes
+
+
+#include custom keystore task
+- name: include kibana.keystore.yml
+  include: kibana.keystore.yml
+  when: elasticsearch_key_bucket is defined
+

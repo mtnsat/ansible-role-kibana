@@ -19,5 +19,8 @@
   apt:
     name: "{{ item }}"
   with_items:
-    - nodejs-legacy
-    - npm
+    - nodejs
+    - libfontconfig1
+    - fonts-liberation
+    - libnss3-tools
+    - libnss3
