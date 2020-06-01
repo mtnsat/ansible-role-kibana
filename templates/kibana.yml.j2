@@ -17,7 +17,10 @@ elasticsearch.url: {{ kibana_elasticsearch_url }}
 {% endif %}
 
 {% if kibana_version > 6 %}
-elasticsearch.hosts: [ {{ kibana_elasticsearch_url }} ]
+elasticsearch.hosts:
+{% for host in kibana_elasticsearch_hosts %}
+	- {{ host }}
+{% endfor %}
 {% endif %}
 
 # preserve_elasticsearch_host true will send the hostname specified in `elasticsearch`. If you set it to false,
@@ -72,7 +75,7 @@ xpack.security.enabled: true
 
 # Time in milliseconds to wait for responses from the back end or elasticsearch.
 # This must be > 0
-# elasticsearch.requestTimeout: 30000
+elasticsearch.requestTimeout: {{ kibana_elasticsearch_request_timeout }}
 
 # Header names and values that are sent to Elasticsearch. Any custom headers cannot be overwritten
 # by client-side headers.
