@@ -40,7 +40,7 @@ elasticsearch.hosts: [ {{ kibana_elasticsearch_url }} ]
 
 {% if kibana_enable_xpack is defined %}
 xpack.security.encryptionKey: {{ kibana_enc_key }}
-xpack.security.sessionTimeout: 600000
+xpack.security.sessionTimeout: 6000000
 xpack.reporting.encryptionKey: {{ kibana_enc_key }}
 server.ssl.enabled: true
 server.ssl.certificate: {{ kibana_ssl_cert }}
@@ -72,7 +72,10 @@ xpack.security.enabled: true
 
 # Time in milliseconds to wait for responses from the back end or elasticsearch.
 # This must be > 0
-# elasticsearch.requestTimeout: 30000
+elasticsearch.requestTimeout: 300000
+
+kibana.autocompleteTimeout: 60000
+kibana.autocompleteTerminateAfter: 100000000
 
 # Header names and values that are sent to Elasticsearch. Any custom headers cannot be overwritten
 # by client-side headers.
@@ -83,7 +86,7 @@ xpack.security.enabled: true
 # elasticsearch.shardTimeout: 0
 
 # Time in milliseconds to wait for Elasticsearch at Kibana startup before retrying
-# elasticsearch.startupTimeout: 5000
+elasticsearch.startupTimeout: 5000
 
 # Set the path to where you would like the process id file to be created.
 # pid.file: /var/run/kibana.pid
