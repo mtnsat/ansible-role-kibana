@@ -17,7 +17,8 @@ elasticsearch.url: {{ kibana_elasticsearch_url }}
 {% endif %}
 
 {% if kibana_version > 6 %}
-elasticsearch.hosts: [ {{ kibana_elasticsearch_url }} ]
+elasticsearch.hosts:  
+   {{ kibana_elasticsearch_url }} 
 {% endif %}
 
 # preserve_elasticsearch_host true will send the hostname specified in `elasticsearch`. If you set it to false,
